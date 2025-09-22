@@ -75,8 +75,8 @@ class PodSpecificFlag(BaseFlag):
 
     name = "pod_specific"
     templates = {
-        "create": "/plugins/pod_specific_challenges/assets/flags/create.html",
-        "update": "/plugins/pod_specific_challenges/assets/flags/update.html",
+        "create": "/plugins/CTFd_pod_specific_challenges/assets/flags/create.html",
+        "update": "/plugins/CTFd_pod_specific_challenges/assets/flags/update.html",
     }
 
     @staticmethod
@@ -161,16 +161,16 @@ class PodSpecificChallengeType(BaseChallenge):
     id = "per_pod"
     name = "Per Pod"
     templates = {
-        "create": "/plugins/pod_specific_challenges/assets/create.html",
-        "update": "/plugins/pod_specific_challenges/assets/update.html",
-        "view": "/plugins/pod_specific_challenges/assets/view.html",
+        "create": "/plugins/CTFd_pod_specific_challenges/assets/create.html",
+        "update": "/plugins/CTFd_pod_specific_challenges/assets/update.html",
+        "view": "/plugins/CTFd_pod_specific_challenges/assets/view.html",
     }
     scripts = {
-        "create": "/plugins/pod_specific_challenges/assets/create.js",
-        "update": "/plugins/pod_specific_challenges/assets/update.js",
+        "create": "/plugins/CTFd_pod_specific_challenges/assets/create.js",
+        "update": "/plugins/CTFd_pod_specific_challenges/assets/update.js",
         "view": "/plugins/challenges/assets/view.js",
     }
-    route = "/plugins/pod_specific_challenges/assets/"
+    route = "/plugins/CTFd_pod_specific_challenges/assets/"
 
     @classmethod
     def create(cls, request):
@@ -199,5 +199,5 @@ def load(app):
     CHALLENGE_CLASSES[PodSpecificChallengeType.id] = PodSpecificChallengeType
     FLAG_CLASSES[PodSpecificFlag.name] = PodSpecificFlag
     register_plugin_assets_directory(
-        app, base_path="/plugins/pod_specific_challenges/assets/"
+        app, base_path="/plugins/CTFd_pod_specific_challenges/assets/"
     )
