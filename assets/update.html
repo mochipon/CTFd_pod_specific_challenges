@@ -1,0 +1,13 @@
+{% extends "admin/challenges/update.html" %}
+
+{% block message %}
+<div class="form-group">
+    <label>
+        Message<br>
+        <small class="form-text text-muted">
+            Challenge text supports <code>:pod_id:</code> tokens, which are replaced with the viewer's assigned pod number.
+        </small>
+    </label>
+    <textarea id="desc-editor" class="form-control chal-desc-editor markdown" name="description" rows="10">{{ challenge.description }}</textarea>
+</div>
+{% endblock %}

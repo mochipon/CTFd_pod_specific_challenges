@@ -1,0 +1,13 @@
+<label>
+    Pod Specific Flag<br>
+    <small>Assign a flag value for a specific pod.</small>
+</label>
+<div class="form-group">
+    <input type="text" class="form-control" name="content" placeholder="flag{example}">
+</div>
+<div class="form-group">
+    <label class="form-label">Pod ID</label>
+    <input type="number" class="form-control" name="data" min="0" placeholder="Enter pod id" required>
+    <small class="form-text text-muted">Only teams assigned to this pod will have this flag accepted.</small>
+</div>
+<input type="hidden" name="type" value="pod_specific">
