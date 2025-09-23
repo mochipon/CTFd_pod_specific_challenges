@@ -16,22 +16,25 @@ from CTFd.plugins.challenges import (
 )
 from CTFd.plugins.flags import FLAG_CLASSES, BaseFlag
 from CTFd.plugins.migrations import upgrade
+from CTFd.utils.config.pages import build_markdown
+from CTFd.utils.helpers import markup
 from CTFd.utils.user import get_current_team, is_admin
 
 try:
     from CTFd.plugins.CTFd_lab_pods import (
         get_team_pod_id as lab_get_pod_id,
+    )
+    from CTFd.plugins.CTFd_lab_pods import (
         substitute_pod_tokens,
     )
 except ImportError as exc:  # pragma: no cover
     raise RuntimeError(
-        "pod_specific_challenges requires the lab_pods plugin to be installed"
+        "pod_specific_challenges requires the lab_pods plugin to be installed",
     ) from exc
 
 
 def resolve_current_pod_id() -> Optional[int]:
     """Resolve the active pod identifier for the current request context."""
-
     if not has_request_context():
         return None
     team = get_current_team()
@@ -42,7 +45,6 @@ def resolve_current_pod_id() -> Optional[int]:
 
 def compare_constant_time(expected: str, candidate: str) -> bool:
     """Compare two strings using a timing-safe equality check."""
-
     if expected is None or candidate is None:
         return False
     if len(expected) != len(candidate):
@@ -60,9 +62,6 @@ class PodSpecificChallenge(Challenges):
 
     @property
     def html(self):
-        from CTFd.utils.config.pages import build_markdown
-        from CTFd.utils.helpers import markup
-
         description = self.description or ""
         pod_id = resolve_current_pod_id()
         if pod_id is not None:
@@ -82,7 +81,6 @@ class PodSpecificFlag(BaseFlag):
     @staticmethod
     def compare(flag, provided):
         """Validate the submission against the stored pod-specific flag."""
-
         expected_flag = (flag.content or "").strip()
         stored_data = (flag.data or "").strip()
 
@@ -112,7 +110,6 @@ class PodSpecificFlag(BaseFlag):
 
 def parse_pod_flag_map(raw_text: Optional[str]) -> Dict[int, str]:
     """Parse a mapping of pod identifiers to flag values from a raw string."""
-
     mapping: Dict[int, str] = {}
     if not raw_text:
         return mapping
@@ -123,14 +120,14 @@ def parse_pod_flag_map(raw_text: Optional[str]) -> Dict[int, str]:
             continue
         if "=" not in stripped:
             raise ChallengeCreateException(
-                f"Invalid pod flag on line {line_number}. Use the format 'pod_id=flag'."
+                f"Invalid pod flag on line {line_number}. Use the format 'pod_id=flag'.",
             )
         pod_text, flag_text = stripped.split("=", 1)
         try:
             pod_id = int(pod_text.strip())
         except ValueError as exc:
             raise ChallengeCreateException(
-                f"Invalid pod id '{pod_text.strip()}' on line {line_number}."
+                f"Invalid pod id '{pod_text.strip()}' on line {line_number}.",
             ) from exc
 
         value = flag_text.strip()
@@ -142,7 +139,6 @@ def parse_pod_flag_map(raw_text: Optional[str]) -> Dict[int, str]:
 
 def create_pod_specific_flags(challenge: Challenges, mapping: Dict[int, str]) -> None:
     """Persist per-pod flags for *challenge* based on *mapping*."""
-
     for pod_id, flag_value in mapping.items():
         db.session.add(
             Flags(
@@ -150,7 +146,7 @@ def create_pod_specific_flags(challenge: Challenges, mapping: Dict[int, str]) ->
                 type=PodSpecificFlag.name,
                 content=flag_value,
                 data=str(pod_id),
-            )
+            ),
         )
     db.session.commit()
 
@@ -194,10 +190,10 @@ class PodSpecificChallengeType(BaseChallenge):
 
 def load(app):
     """Register the pod specific challenge type with the application."""
-
     upgrade(plugin_name="pod_specific_challenges")
     CHALLENGE_CLASSES[PodSpecificChallengeType.id] = PodSpecificChallengeType
     FLAG_CLASSES[PodSpecificFlag.name] = PodSpecificFlag
     register_plugin_assets_directory(
-        app, base_path="/plugins/CTFd_pod_specific_challenges/assets/"
+        app,
+        base_path="/plugins/CTFd_pod_specific_challenges/assets/",
     )
