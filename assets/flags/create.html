@@ -1,13 +1,61 @@
-<label>
-    Pod Specific Flag<br>
-    <small>Assign a flag value for a specific pod.</small>
-</label>
-<div class="form-group">
-    <input type="text" class="form-control" name="content" placeholder="flag{example}">
+<div class="flag-form pod-specific-flag">
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white">
+            <h6 class="mb-0">
+                <i class="fas fa-server me-2"></i>
+                Pod Specific Flag
+            </h6>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-3">
+                <i class="fas fa-info-circle me-1"></i>
+                This flag will only be accepted by teams assigned to the specified pod.
+            </p>
+
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold" for="pod-flag-content">
+                    Flag Value <span class="text-danger">*</span>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="pod-flag-content"
+                       name="content"
+                       placeholder="flag{example_flag_value}"
+                       required>
+                <div class="form-text">
+                    <i class="fas fa-flag me-1"></i>
+                    Enter the flag value that teams in this pod should submit.
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold" for="pod-flag-id">
+                    Pod ID <span class="text-danger">*</span>
+                </label>
+                <input type="number"
+                       class="form-control"
+                       id="pod-flag-id"
+                       name="data"
+                       min="0"
+                       max="9999"
+                       placeholder="Enter pod ID (e.g., 1, 2, 3)"
+                       required
+                       title="Pod ID must be a non-negative integer">
+                <div class="form-text">
+                    <i class="fas fa-hashtag me-1"></i>
+                    Only teams assigned to this pod will have this flag accepted.
+                </div>
+            </div>
+
+            <input type="hidden" name="type" value="pod_specific">
+
+            <div class="alert alert-info d-flex align-items-center mt-3">
+                <i class="fas fa-lightbulb me-2"></i>
+                <small>
+                    <strong>Tip:</strong> You can create multiple pod-specific flags for the same challenge
+                    to handle different pod environments.
+                </small>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="form-group">
-    <label class="form-label">Pod ID</label>
-    <input type="number" class="form-control" name="data" min="0" placeholder="Enter pod id" required>
-    <small class="form-text text-muted">Only teams assigned to this pod will have this flag accepted.</small>
-</div>
-<input type="hidden" name="type" value="pod_specific">

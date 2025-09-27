@@ -18,22 +18,22 @@ CTFd.plugin.run((_CTFd) => {
         const label = defaultGroup.find("label")
         if (label.length) {
             label.html(
-                "Default Flag:<br><small class=\"form-text text-muted\">Flag used when no pod specific flag matches.</small>"
+                "Default Flag:<br><small class=\"form-text text-muted d-block mt-1\">Flag used when no pod specific flag matches.</small>"
             )
         }
 
         if (!modal.find("[data-pod-specific-flags]").length) {
             const podSection = $(
-                `<div class="form-group" data-pod-specific-flags>
-                    <label>
-                        Pod Specific Flags:<br>
-                        <small class="form-text text-muted">
+                `<div class="form-group mb-4" data-pod-specific-flags>
+                    <label class="form-label">
+                        Pod Specific Flags:
+                        <small class="form-text text-muted d-block">
                             Add flag overrides per pod. Leave blank to skip.
                         </small>
                     </label>
-                    <div class="pod-flag-rows"></div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm mt-2" data-add-pod-flag>
-                        Add Pod Flag
+                    <div class="pod-flag-rows mb-3"></div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-add-pod-flag>
+                        <i class="fas fa-plus me-1"></i>Add Pod Flag
                     </button>
                 </div>`
             )
@@ -53,15 +53,20 @@ CTFd.plugin.run((_CTFd) => {
 
     function addPodFlagRow(container, podId = "", flagValue = "") {
         const row = $(
-            `<div class="row g-2 align-items-center mb-2" data-pod-flag-row>
-                <div class="col-md-4">
-                    <input type="number" class="form-control form-control-sm pod-flag-pod" min="0" placeholder="Pod ID" value="${escapeHtml(podId)}">
+            `<div class="row g-2 align-items-center mb-2 px-3" data-pod-flag-row>
+                <div class="col-3">
+                    <input type="number" class="form-control form-control-sm pod-flag-pod"
+                           min="0" placeholder="Pod ID" value="${escapeHtml(podId)}">
                 </div>
-                <div class="col-md-7">
-                    <input type="text" class="form-control form-control-sm pod-flag-value" placeholder="Flag value" value="${escapeHtml(flagValue)}">
+                <div class="col-8">
+                    <input type="text" class="form-control form-control-sm pod-flag-value"
+                           placeholder="Flag value" value="${escapeHtml(flagValue)}">
                 </div>
-                <div class="col-md-1 text-end">
-                    <button type="button" class="btn btn-outline-danger btn-sm" data-remove-pod-flag>&times;</button>
+                <div class="col-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm form-control form-control-sm"
+                            data-remove-pod-flag title="Remove">
+                        &times;
+                    </button>
                 </div>
             </div>`
         )
