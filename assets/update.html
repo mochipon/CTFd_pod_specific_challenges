@@ -2,32 +2,22 @@
 
 {% block message %}
 <div class="form-group">
-    <label class="form-label fw-bold">
-        Challenge Description
-        <span class="badge bg-warning text-dark ms-2">Pod-Aware</span>
+    <label for="new-desc-editor">
+        Challenge Description: <span class="badge bg-warning text-dark mx-1 px-1">Pod-Aware</span>
+        <small class="form-text text-muted">
+            Use Markdown to describe the challenge. Include <code>:pod_id:</code> tokens to dynamically
+            insert the assigned pod number for each team. The description will be rendered with
+            team-specific pod information when viewed by participants.
+        </small>
     </label>
-    <div class="alert alert-info d-flex align-items-start mb-2">
-        <i class="fas fa-info-circle me-2 mt-1"></i>
-        <div>
-            <strong>Pod Token Substitution:</strong> Use <code>:pod_id:</code> tokens which are
-            automatically replaced with each team's assigned pod number.
-            <br>
-            <small class="text-muted mt-1">
-                Current tokens in description:
-                <span id="token-count" class="badge bg-secondary">Scanning...</span>
-            </small>
-        </div>
-    </div>
-    <textarea id="desc-editor"
-              class="form-control chal-desc-editor markdown"
-              name="description"
-              rows="12">{{ challenge.description }}</textarea>
-    <div class="form-text d-flex justify-content-between align-items-center">
-        <span>
-            <i class="fas fa-markdown me-1"></i>
-            Supports Markdown formatting and <code>:pod_id:</code> token substitution.
-        </span>
-        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#token-preview">
+    <textarea
+        id="new-desc-editor"
+        class="form-control markdown"
+        name="description"
+        rows="10"
+    >{{ challenge.description }}</textarea>
+    <div class="form-text d-flex justify-content-end">
+        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#token-preview">
             <i class="fas fa-eye me-1"></i>
             Preview Tokens
         </button>
@@ -43,52 +33,24 @@
                     <i class="fas fa-eye me-2"></i>
                     Pod Token Preview
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
                 <p class="text-muted mb-3">
                     Preview how your description will appear to teams in different pods:
                 </p>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <h6 class="text-primary">Pod 1 Preview:</h6>
-                        <div class="border rounded p-3 bg-light" id="preview-pod-1"></div>
+                        <textarea id="preview-pod-1" class="form-control mb-2" rows="10" readonly>No description yet...</textarea>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <h6 class="text-success">Pod 2 Preview:</h6>
-                        <div class="border rounded p-3 bg-light" id="preview-pod-2"></div>
-                    </div>
-                    <div class="col-md-4">
-                        <h6 class="text-warning">Pod 3 Preview:</h6>
-                        <div class="border rounded p-3 bg-light" id="preview-pod-3"></div>
+                        <textarea id="preview-pod-2" class="form-control mb-2" rows="10" readonly>No description yet...</textarea>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-// Token counting and preview functionality
-$(document).ready(function() {
-    function countTokens() {
-        const description = $('#desc-editor').val() || '';
-        const tokens = (description.match(/:pod_id:/g) || []).length;
-        $('#token-count').text(tokens + ' token(s) found').removeClass('bg-secondary bg-success bg-warning')
-            .addClass(tokens > 0 ? 'bg-success' : 'bg-warning');
-
-        // Update previews
-        const preview1 = description.replace(/:pod_id:/g, '1');
-        const preview2 = description.replace(/:pod_id:/g, '2');
-        const preview3 = description.replace(/:pod_id:/g, '3');
-
-        $('#preview-pod-1').text(preview1 || 'No description yet...');
-        $('#preview-pod-2').text(preview2 || 'No description yet...');
-        $('#preview-pod-3').text(preview3 || 'No description yet...');
-    }
-
-    $('#desc-editor').on('input', countTokens);
-    countTokens(); // Initial count
-});
-</script>
 {% endblock %}
