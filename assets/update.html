@@ -9,18 +9,18 @@
     <div class="alert alert-info d-flex align-items-start mb-2">
         <i class="fas fa-info-circle me-2 mt-1"></i>
         <div>
-            <strong>Pod Token Substitution:</strong> Use <code>:pod_id:</code> tokens which are 
+            <strong>Pod Token Substitution:</strong> Use <code>:pod_id:</code> tokens which are
             automatically replaced with each team's assigned pod number.
             <br>
             <small class="text-muted mt-1">
-                Current tokens in description: 
+                Current tokens in description:
                 <span id="token-count" class="badge bg-secondary">Scanning...</span>
             </small>
         </div>
     </div>
-    <textarea id="desc-editor" 
-              class="form-control chal-desc-editor markdown" 
-              name="description" 
+    <textarea id="desc-editor"
+              class="form-control chal-desc-editor markdown"
+              name="description"
               rows="12">{{ challenge.description }}</textarea>
     <div class="form-text d-flex justify-content-between align-items-center">
         <span>
@@ -76,17 +76,17 @@ $(document).ready(function() {
         const tokens = (description.match(/:pod_id:/g) || []).length;
         $('#token-count').text(tokens + ' token(s) found').removeClass('bg-secondary bg-success bg-warning')
             .addClass(tokens > 0 ? 'bg-success' : 'bg-warning');
-        
+
         // Update previews
         const preview1 = description.replace(/:pod_id:/g, '1');
         const preview2 = description.replace(/:pod_id:/g, '2');
         const preview3 = description.replace(/:pod_id:/g, '3');
-        
+
         $('#preview-pod-1').text(preview1 || 'No description yet...');
         $('#preview-pod-2').text(preview2 || 'No description yet...');
         $('#preview-pod-3').text(preview3 || 'No description yet...');
     }
-    
+
     $('#desc-editor').on('input', countTokens);
     countTokens(); // Initial count
 });

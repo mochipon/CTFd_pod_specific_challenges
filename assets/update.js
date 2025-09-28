@@ -1,6 +1,6 @@
 /**
  * Pod Specific Challenges - Update Challenge JavaScript
- * 
+ *
  * Provides enhanced functionality for updating pod-specific challenges,
  * including pod flag management and validation.
  */
@@ -128,8 +128,8 @@ CTFd.plugin.run((_CTFd) => {
                         <code class="text-break">${escapeHtml(flagContent)}</code>
                     </div>
                     <div class="col-md-2 text-end">
-                        <button type="button" class="btn btn-outline-danger btn-sm" 
-                                data-delete-existing-flag="${escapeHtml(flagId)}" 
+                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                data-delete-existing-flag="${escapeHtml(flagId)}"
                                 title="Delete flag">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -142,7 +142,7 @@ CTFd.plugin.run((_CTFd) => {
         // Add separator
         existingSection.append('<hr class="my-3">');
         existingSection.append('<h6 class="text-muted mb-3">Add New Pod Flags</h6>');
-        
+
         container.append(existingSection);
     }
 
@@ -190,17 +190,17 @@ CTFd.plugin.run((_CTFd) => {
         const row = $(
             `<div class="row g-2 align-items-center mb-2" data-pod-flag-row>
                 <div class="col-md-4">
-                    <input type="number" class="form-control form-control-sm pod-flag-pod" 
+                    <input type="number" class="form-control form-control-sm pod-flag-pod"
                            min="0" placeholder="Pod ID" value="${escapeHtml(podId)}"
                            title="Enter the pod ID (must be a non-negative integer)">
                 </div>
                 <div class="col-md-7">
-                    <input type="text" class="form-control form-control-sm pod-flag-value" 
+                    <input type="text" class="form-control form-control-sm pod-flag-value"
                            placeholder="Flag value" value="${escapeHtml(flagValue)}"
                            title="Enter the flag value for this pod">
                 </div>
                 <div class="col-md-1 text-end">
-                    <button type="button" class="btn btn-outline-danger btn-sm" 
+                    <button type="button" class="btn btn-outline-danger btn-sm"
                             data-remove-pod-flag title="Remove row">&times;</button>
                 </div>
             </div>`
@@ -341,7 +341,7 @@ CTFd.plugin.run((_CTFd) => {
         saveButton.prop("disabled", true).text("Saving...");
 
         // Create flags sequentially to avoid race conditions
-        const flagPromises = mapping.map(({ podId, value }) => 
+        const flagPromises = mapping.map(({ podId, value }) =>
             createPodFlag(challengeId, podId, value)
         );
 
@@ -368,10 +368,10 @@ CTFd.plugin.run((_CTFd) => {
      */
     function showAlert(title, message) {
         if (typeof window.ezAlert === "function") {
-            window.ezAlert({ 
-                title: title, 
-                body: message, 
-                button: "OK" 
+            window.ezAlert({
+                title: title,
+                body: message,
+                button: "OK"
             });
         } else {
             // Fallback to browser alert
@@ -397,7 +397,7 @@ CTFd.plugin.run((_CTFd) => {
             modal.on("click", "[data-remove-pod-flag]", function() {
                 const row = $(this).closest("[data-pod-flag-row]");
                 const allRows = modal.find("[data-pod-flag-row]");
-                
+
                 if (allRows.length > 1) {
                     row.fadeOut(200, function() { $(this).remove(); });
                 } else {
