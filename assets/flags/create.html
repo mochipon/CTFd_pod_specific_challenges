@@ -1,14 +1,14 @@
-<div class="flag-form pod-specific-flag">
+<div class="flag-form pod-specific-flag mb-3">
     <div class="card border-primary">
         <div class="card-header bg-primary text-white">
             <h6 class="mb-0">
-                <i class="fas fa-server me-2"></i>
-                Pod Specific Flag
+                <i class="fas fa-server"></i>
+                Create Pod Specific Flag
             </h6>
         </div>
         <div class="card-body">
             <p class="text-muted mb-3">
-                <i class="fas fa-info-circle me-1"></i>
+                <i class="fas fa-info-circle"></i>
                 This flag will only be accepted by teams assigned to the specified pod.
             </p>
 
@@ -23,7 +23,7 @@
                        placeholder="flag{example_flag_value}"
                        required>
                 <div class="form-text">
-                    <i class="fas fa-flag me-1"></i>
+                    <i class="fas fa-flag"></i>
                     Enter the flag value that teams in this pod should submit.
                 </div>
             </div>
@@ -42,7 +42,7 @@
                        required
                        title="Pod ID must be a non-negative integer">
                 <div class="form-text">
-                    <i class="fas fa-hashtag me-1"></i>
+                    <i class="fas fa-hashtag"></i>
                     Only teams assigned to this pod will have this flag accepted.
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <input type="hidden" name="type" value="pod_specific">
 
             <div class="alert alert-info d-flex align-items-center mt-3">
-                <i class="fas fa-lightbulb me-2"></i>
+                <i class="fas fa-lightbulb"></i>
                 <small>
                     <strong>Tip:</strong> You can create multiple pod-specific flags for the same challenge
                     to handle different pod environments.
